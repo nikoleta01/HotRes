@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="447.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.RezervacieHotel">
+   <children>
+      <TextField layoutX="113.0" layoutY="96.0" />
+      <Label layoutX="50.0" layoutY="101.0" text="Meno" />
+      <Label layoutX="36.0" layoutY="142.0" text="Priezvisko" />
+      <TextField layoutX="113.0" layoutY="135.0" />
+      <TextField layoutX="113.0" layoutY="178.0" />
+      <TextField layoutX="113.0" layoutY="224.0" />
+      <Label layoutX="52.0" layoutY="183.0" text="e-mail" />
+      <Label layoutX="43.0" layoutY="229.0" text="tel. číslo" />
+      <Label layoutX="48.0" layoutY="314.0" text="Dospelí" />
+      <Button layoutX="45.0" layoutY="386.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="261.0" text="Rezervuj" />
+      <ChoiceBox layoutX="113.0" layoutY="309.0" prefHeight="31.0" prefWidth="66.0" />
+      <ChoiceBox layoutX="246.0" layoutY="309.0" prefHeight="21.0" prefWidth="54.0" />
+      <Label layoutX="207.0" layoutY="314.0" text="Deti" />
+      <Label layoutX="59.0" layoutY="272.0" text="Izba" />
+      <ChoiceBox layoutX="113.0" layoutY="267.0" prefHeight="31.0" prefWidth="187.0" />
+      <Label layoutX="137.0" layoutY="41.0" text="Rezervácia">
+         <font>
+            <Font name="System Bold Italic" size="18.0" />
+         </font></Label>
+   </children>
+</AnchorPane>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="295.0" prefWidth="612.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Hodnotenie">
+   <children>
+      <Label layoutX="246.0" layoutY="35.0" prefHeight="27.0" prefWidth="102.0" text="Hodnotenie">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <TextField layoutX="39.0" layoutY="128.0" prefHeight="46.0" prefWidth="537.0" />
+      <Button layoutX="409.0" layoutY="240.0" mnemonicParsing="false" text="PRIDAŤ HODNOTENIE" />
+      <Label layoutX="28.0" layoutY="80.0" text="Napíšte krátke rating hotela. Pomôžete tak ďalším zákazníkom pri rozhodovaní " />
+      <Slider layoutX="86.0" layoutY="188.0" majorTickUnit="10.0" prefHeight="18.0" prefWidth="423.0" showTickLabels="true" />
+   </children>
+</AnchorPane>

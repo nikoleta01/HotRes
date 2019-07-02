@@ -1,0 +1,2 @@
+commit 0428a931cc11984bd7f0501d3cbff0dc632fd268
+https://github.com/fiit-dbs-2019/dbs2019-project-assignment-nika-karin

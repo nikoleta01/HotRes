@@ -1,0 +1,184 @@
+Pri vytv�ran� datab�zy sme vyu�ili java faker - https://github.com/DiUS/java-faker. Bolo potrebn� si ho stiahnu� a dotvori� do neho Main, kde 
+sa vykon�valo samotn� generovanie.
+
+MAIN java fakera stiahnut�ho zo spomenutej str�nky
+import com.github.javafaker.Faker;
+
+import java.io.BufferedReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Random;
+
+public class Main
+{
+    public static void main(String[] args) throws SQLException
+    {
+
+        BufferedReader reader;
+        BufferedReader readers;
+
+	//vytvorenie fakera
+        Faker faker = new Faker();
+
+        Connection connect = null;
+
+        //pripojenie k databaze
+        connect = DriverManager.getConnection("jdbc:postgresql://localhost:5432/HotRes", "postgres", "paradajka");
+
+vkladanie hotelov, spusten� 4 kr�t, aby v ka�dom meste boli aspo� 4 hotely, v bud�cnosti pl�nujeme roz��ri�
+
+//        try
+//        {
+//            reader = new BufferedReader(new FileReader("/home/nikoleta/Desktop/hotel_names.txt"));
+            String createTable = "INSERT INTO hotel(hotel_id, nazov, phone_number, lokalita_id, email, hviezdicky, adresa) VALUES(DEFAULT, ?, ?, ?, ?, ?, ?);";
+
+//            String line = reader.readLine();
+            PreparedStatement pst = connect.prepareStatement(createTable);
+            int count = 1;
+
+            Random randomGenerator = new Random();
+
+            for(int i = 0; i < 781824; i++)
+            {
+//                for (int j = 0; j < 7; j++)
+//                {
+                    pst.setString(1, faker.university().name() + " hotel");
+                    pst.setString(2, faker.phoneNumber().cellPhone());
+                    pst.setInt(3, count);
+                    pst.setString(4, faker.name().firstName() + "." + faker.name().lastName() + "@gmail.com");
+                    //TODO
+                    int randomInt = randomGenerator.nextInt(5) + 1;
+                    if (randomInt == 1)
+                    {
+                         pst.setString(5, "*");
+                    }
+                    else if(randomInt == 2)
+                    {
+                         pst.setString(5, "**");
+                    }
+                    else if(randomInt == 3)
+                    {
+                         pst.setString(5, "***");
+                    }
+                    else if(randomInt == 4)
+                    {
+                         pst.setString(5, "****");
+                    }
+                    else if(randomInt == 5)
+                    {
+                         pst.setString(5, "*****");
+                    }
+                    // pst.setString(5, "**");
+                    pst.setString(6, faker.address().streetAddress());
+
+//                    line = reader.readLine();
+
+                    pst.addBatch();
+//                }
+                count++;
+            }
+
+            pst.executeBatch();
+//            reader.close();
+
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+
+//        BufferedWriter writer = null;
+//        try {
+//            writer = new BufferedWriter(new FileWriter("hotel_names.txt"));
+//        } catch (IOException e) {
+//
+//        }
+//        try {
+//            for(int i = 0; i < 6000000; i++)
+//            {
+//                writer.write(faker.university().name() + " hotel");
+//                writer.newLine();
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            writer.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+
+vkladanie miest a kraj�n do datab�zy
+
+        //insertion of cities and countries 
+//        try
+//        {
+//            reader = new BufferedReader(new FileReader("/home/nikoleta/Desktop/cities.txt"));
+//            String createTable = "INSERT INTO lokalita(city, country) VALUES(?, ?);";
+//
+//            String line = reader.readLine();
+//            PreparedStatement pst = connect.prepareStatement(createTable);
+//
+//
+//            while (line != null)
+//            {
+//                pst.setString(1, line);
+//                pst.setString(2, faker.address().country());
+//
+//                pst.addBatch();
+//                line = reader.readLine();
+//            }
+//            pst.executeBatch();
+//            reader.close();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+
+vytv�ranie textov�ho s�boru, ktor� obsahoval 10 mili�nov riadkov
+n�zov textov�ho s�boru, odkia� boli vygenerovan� d�ta �erpan� je cities.txt
+bolo potrebn� vyselektova� odtia� iba unik�tne mest�, tak aby sa neopakovali
+v konzole pou�it�m sort uniq sa vybrali iba unik�tne mest�, tak�e z 10 mili�nov ostalo len 781 tis�c z�znamov 
+
+//insertion of cities into file
+//        PrintWriter writer = null;
+//        try
+//        {
+//            writer = new PrintWriter("cities.txt", "UTF-8");
+//            for(int i = 0; i < 10000000; i++)
+//            {
+//                writer.println(faker.address().city());
+//            }
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+    }
+}
+
+queries z PostgreSQL 
+
+vytvorenie tabu�ky lokalita
+CREATE TABLE lokalita(
+   id SERIAL PRIMARY KEY,
+   city VARCHAR NOT NULL,
+   country VARCHAR
+);
+
+vytvorenie tabu�ky hotelov
+CREATE TABLE hotel(
+hotel_id SERIAL PRIMARY KEY,
+email VARCHAR,
+nazov VARCHAR,
+hviezdicky VARCHAR,
+phone_number bigint,
+lokalita_id INTEGER,
+FOREIGN KEY (lokalita_id) REFERENCES lokalita(id)
+);
+
+pri ne�spe�n�ch pokusoch naplni� datab�zu bolo nutn� vynulova� sekvencie, aby primary key za��nal op� od jednotky
+alter sequence hotel_hotel_id_seq restart with 1;
